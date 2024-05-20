@@ -20,7 +20,6 @@ final class WalletTable extends AbstractMigration
     public function change(): void
     {
         $this->table('wallets')
-            ->addColumn('id', 'integer', ['identity' => true])
             ->addColumn('uuid', 'string', ['limit' => 36])
             ->addColumn('date_time', 'datetime')
             ->addColumn('name', 'string', ['limit' => 255])
@@ -34,10 +33,14 @@ final class WalletTable extends AbstractMigration
             ->addColumn('balance', 'decimal', ['precision' => 10, 'scale' => 2])
             ->addColumn('exclude_from_stats', 'boolean', ['default' => false])
             ->addColumn('sorting', 'integer')
-            ->addColumn('workspace_id', 'integer')
+            ->addColumn('workspace_id', 'biginteger', ['signed' => false])
             ->addColumn('created_at', 'datetime')
             ->addColumn('updated_at', 'datetime')
             ->addColumn('deleted_at', 'datetime', ['null' => true])
+            ->addForeignKey('workspace_id', 'workspaces', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+            ->addIndex('uuid', ['unique' => true])
+            ->addIndex('workspace_id')
+            ->addIndex('id')
             ->create();
     }
 }
