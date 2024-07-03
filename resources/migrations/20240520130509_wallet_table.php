@@ -19,19 +19,24 @@ final class WalletTable extends AbstractMigration
      */
     public function change(): void
     {
+        if($this->hasTable('wallets')) {
+            return;
+        }
+
         $this->table('wallets')
             ->addColumn('uuid', 'string', ['limit' => 36])
             ->addColumn('date_time', 'datetime')
             ->addColumn('name', 'string', ['limit' => 255])
             ->addColumn('color', 'string', ['limit' => 7])
-            ->addColumn('date', 'date')
             ->addColumn('type', 'string', ['limit' => 255])
             ->addColumn('installement', 'integer', ['default' => 0])
             ->addColumn('installement_value', 'decimal', ['precision' => 10, 'scale' => 2, 'null' => true])
-            ->addColumn('installement_from_Wallet', 'integer', ['null' => true])
             ->addColumn('currency', 'string', ['limit' => 3])
             ->addColumn('balance', 'decimal', ['precision' => 10, 'scale' => 2])
             ->addColumn('exclude_from_stats', 'boolean', ['default' => false])
+            ->addColumn('invoice_date', 'date')
+            ->addColumn('payment_account', 'integer')
+            ->addColumn('closing_date', 'date')
             ->addColumn('sorting', 'integer')
             ->addColumn('workspace_id', 'biginteger', ['signed' => false])
             ->addColumn('created_at', 'datetime')
