@@ -26,7 +26,7 @@ final class WalletTable extends AbstractMigration
         $this->table('wallets')
             ->addColumn('uuid', 'string', ['limit' => 36])
             ->addColumn('name', 'string', ['limit' => 255])
-            ->addColumn('color', 'string', ['limit' => 7])
+            ->addColumn('color', 'string', ['limit' => 22])
             ->addColumn('type', 'string', ['limit' => 255])
             ->addColumn('installement', 'integer', ['default' => 0])
             ->addColumn('installement_value', 'decimal', ['precision' => 10, 'scale' => 2, 'null' => true])
