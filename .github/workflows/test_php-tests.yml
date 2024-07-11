@@ -49,9 +49,8 @@ jobs:
         DB_DATABASE: test_db
         DB_USERNAME: root
         DB_PASSWORD: root
-        PHINX_ENVIRONMENT: github_actions
       run: |
-        vendor/bin/phinx migrate
+        vendor/bin/phinx migrate -e github_actions
         vendor/bin/phinx seed:run
 
     - name: Run PHPUnit tests
