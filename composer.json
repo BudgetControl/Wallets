@@ -7,10 +7,6 @@
         "source": {
             "type": "vcs",
             "url": "https://github.com/mlabfactory/phpunit-self-api-integration.git"
-        },
-        "budgetcontrol/libs-connector": {
-            "type": "vcs",
-            "url": "https://github.com/BudgetControl/Libs_BcConnector.git"
         }
     },
     "require": {
@@ -41,8 +37,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Budgetcontrol\\MSNAME\\": "src/"
-        }
+            "Budgetcontrol\\Wallet\\": "src/",
+            "Budgetcontrol\\Test\\": "test/"
+        },
+        "files": [
+            "config/helpers.php"
+        ]
     },
     "authors": [
         {
