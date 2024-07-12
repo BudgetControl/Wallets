@@ -38,4 +38,14 @@ class Wallet extends Model
         }
         parent::__construct($this->attributes);
     }
+
+    public function setClosingDateAttribute($value)
+    {
+        return $value ? \Carbon\Carbon::parse($value)->format('d-m-Y 00:00:00') : null;
+    }
+
+    public function setInvoiceDateAttribute($value)
+    {
+        return $value ? \Carbon\Carbon::parse($value)->format('d-m-Y 00:00:00') : null;
+    }
 }
