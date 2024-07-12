@@ -32,3 +32,5 @@ public_html/hot
 .jpeg
 .png
 .gif
+
+.phpunit.cache/*

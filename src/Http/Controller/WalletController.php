@@ -18,10 +18,16 @@ class WalletController extends Controller {
      */
     public function index(Request $request, Response $response, $argv): Response
     {
-        $wallets = Wallet::where('workspace_id', $argv['wsid'])->get();
+        $wallets = Wallet::where('workspace_id', $argv['wsid']);
 
         // get filter by query params
         $filter = $request->getQueryParams()['filter'] ?? null;
+
+        if(isset($filter['trashed']) && $filter['trashed'] == true) {
+            $wallets->withTrashed();
+        }
+
+        $wallets = $wallets->get();
 
         if(isset($filter['type'])) {
             $wallets = $wallets->filter(function ($wallet) use($filter) {
@@ -71,7 +77,7 @@ class WalletController extends Controller {
     public function show(Request $request, Response $response, $argv): Response
     {
         $id = $argv['uuid'];
-        $wallet = Wallet::where('uuid', $id)->first();
+        $wallet = Wallet::where('uuid', $id)->withTrashed()->first();
         return response($wallet->toArray(), 200);
     }
 
@@ -129,7 +135,7 @@ class WalletController extends Controller {
     public function restore(Request $request, Response $response, $argv): Response
     {
         $id = $argv['uuid'];
-        $wallet = Wallet::withTrashed()->where('uuid', $id)->first();
+        $wallet = Wallet::withTrashed()->where('uuid', $id)->withTrashed()->first();
         if(!$wallet) {
             return response(['message' => 'Wallet not found'], 404);
         }

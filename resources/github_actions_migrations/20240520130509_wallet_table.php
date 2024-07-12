@@ -41,10 +41,6 @@ final class WalletTable extends AbstractMigration
             ->addColumn('created_at', 'datetime')
             ->addColumn('updated_at', 'datetime')
             ->addColumn('deleted_at', 'datetime', ['null' => true])
-            ->addForeignKey('workspace_id', 'workspaces', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-            ->addIndex('uuid', ['unique' => true])
-            ->addIndex('workspace_id')
-            ->addIndex('id')
             ->create();
     }
 }

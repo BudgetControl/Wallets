@@ -9,7 +9,7 @@ class Wallet extends Model
 {
     use SoftDeletes, HasFactory;
     
-    protected $table = 'accounts';
+    protected $table = 'wallets';
 
     protected $fillable = [
     'uuid',
