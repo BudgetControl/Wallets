@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Budgetcontrol\Wallet\Domain\Model\Wallet;
 use Budgetcontrol\Entry\Domain\Enum\EntryType;
 use Budgetcontrol\Wallet\Http\Controller\WalletController;
+use Carbon\Carbon;
 
 class WalletCrudTest extends BaseCase
 {
@@ -70,14 +71,19 @@ class WalletCrudTest extends BaseCase
         $bodyParams = [
             "name" => "test",
             "color" => "#e6e632ff",
-            "invoice_date" => "2024-07-11 13:45:00",
-            "closing_date" => "2024-07-04 13:45:00",
+            "invoice_date" => Carbon::parse(date("Y-m-d 00:00:00"))->toAtomString(),
+            "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card-revolving",
-            "installement_value" => 400,
+            "installement_value" => "400.00",
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => false
+            "currency" => "2",
+            "balance" => '0.00',
+            "exclude_from_stats" => 0,
+            "installement" => 1,
+            "sorting" => 1,
+            "deleted_at" => null
         ];
 
         $request = $this->createMock(ServerRequestInterface::class);
@@ -88,7 +94,7 @@ class WalletCrudTest extends BaseCase
         $argv = ['wsid' => 1, 'uuid' => '50bb8d7f-8f64-4597-b74d-d07d6b7a646c'];
 
         $controller = new WalletController();
-        $result = $controller->show($request, $response, $argv);
+        $result = $controller->update($request, $response, $argv);
 
         $this->assertEquals(200, $result->getStatusCode());
         $wallet = Wallet::where('workspace_id', $argv['wsid'])->where('uuid', $argv['uuid'])->first();
