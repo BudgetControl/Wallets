@@ -65,6 +65,39 @@ class WalletCrudTest extends BaseCase
         $this->assertEquals($wallet->toArray(), $resultBody);
     }
 
+    public function testUpdate()
+    {
+        $bodyParams = [
+            "name" => "test",
+            "color" => "#e6e632ff",
+            "invoice_date" => "2024-07-11 13:45:00",
+            "closing_date" => "2024-07-04 13:45:00",
+            "payment_account" => 1,
+            "type" => "credit-card-revolving",
+            "installement_value" => 400,
+            "currency" => 2,
+            "balance" => 0,
+            "exclude_from_stats" => false
+        ];
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getParsedBody')->willReturn($bodyParams);
+
+        $response = $this->createMock(ResponseInterface::class);
+
+        $argv = ['wsid' => 1, 'uuid' => '50bb8d7f-8f64-4597-b74d-d07d6b7a646c'];
+
+        $controller = new WalletController();
+        $result = $controller->show($request, $response, $argv);
+
+        $this->assertEquals(200, $result->getStatusCode());
+        $wallet = Wallet::where('workspace_id', $argv['wsid'])->where('uuid', $argv['uuid'])->first();
+        $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $wallet->toArray());
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
+
+        $this->assertEquals($bodyParams, $resultBody);
+    }
+
     public function testDestroy()
     {
         $request = $this->createMock(ServerRequestInterface::class);
