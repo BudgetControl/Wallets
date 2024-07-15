@@ -100,7 +100,8 @@ class WalletController extends Controller {
             return response(['message' => 'Wallet not found'], 404);
         }
 
-        $wallet->update($bodyParams);
+        $wallet->fill($bodyParams);
+        $wallet->save();
         return response($wallet->toArray(), 200);
     }
 

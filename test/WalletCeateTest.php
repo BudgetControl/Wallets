@@ -3,13 +3,14 @@
 namespace Budgetcontrol\Test;
 
 use Slim\Psr7\Stream;
+use GuzzleHttp\Psr7\Utils;
+use Illuminate\Support\Carbon;
 use MLAB\PHPITest\Service\HttpRequest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Budgetcontrol\Wallet\Domain\Model\Wallet;
 use Budgetcontrol\Entry\Domain\Enum\EntryType;
 use Budgetcontrol\Wallet\Http\Controller\WalletController;
-use GuzzleHttp\Psr7\Utils;
 
 class WalletCeateTest extends BaseCase
 {
@@ -41,8 +42,8 @@ class WalletCeateTest extends BaseCase
         $bodyParams = [
             "name" => "test",
             "color" => "#e6e632ff",
-            "invoice_date" => "2024-07-11 13:45:00",
-            "closing_date" => "2024-07-04 13:45:00",
+            "invoice_date" => Carbon::parse(date("Y-m-d 00:00:00"))->toAtomString(),
+            "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card-revolving",
             "installement_value" => 400,
@@ -73,8 +74,8 @@ class WalletCeateTest extends BaseCase
         $bodyParams = [
             "name" => "test",
             "color" => "#e6e632ff",
-            "invoice_date" => "2024-07-11 13:45:00",
-            "closing_date" => "2024-07-04 13:45:00",
+            "invoice_date" => Carbon::parse(date("Y-m-d 00:00:00"))->toAtomString(),
+            "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card",
             "currency" => 2,

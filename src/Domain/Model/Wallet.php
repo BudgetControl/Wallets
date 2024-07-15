@@ -1,9 +1,11 @@
 <?php
 namespace Budgetcontrol\Wallet\Domain\Model;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Wallet extends Model
 {
@@ -26,9 +28,6 @@ class Wallet extends Model
     'closing_date',
     'sorting',
     'workspace_id',
-    'created_at',
-    'updated_at',
-    'deleted_at'
     ];
 
     public function __construct()
@@ -39,13 +38,19 @@ class Wallet extends Model
         parent::__construct($this->attributes);
     }
 
-    public function setClosingDateAttribute($value)
+    protected function closingDate(): Attribute
     {
-        return $value ? \Carbon\Carbon::parse($value)->format('d-m-Y 00:00:00') : null;
+        return Attribute::make(
+            get: fn (?string $value) => is_null($value) ? null : Carbon::parse($value)->toAtomString(),
+            set: fn (?string $value) => is_null($value) ? null :  Carbon::parse($value)->format('Y-m-d')
+        );
     }
 
-    public function setInvoiceDateAttribute($value)
+    protected function invoiceDate(): Attribute
     {
-        return $value ? \Carbon\Carbon::parse($value)->format('d-m-Y 00:00:00') : null;
+        return Attribute::make(
+            get: fn (?string $value) => is_null($value) ? null : Carbon::parse($value)->toAtomString(),
+            set: fn (?string $value) => is_null($value) ? null : Carbon::parse($value)->format('Y-m-d')
+        );
     }
 }
