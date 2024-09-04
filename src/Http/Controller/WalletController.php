@@ -27,7 +27,7 @@ class WalletController extends Controller {
             $wallets->withTrashed();
         }
 
-        $wallets = $wallets->get();
+        $wallets = $wallets->orderBy('name')->get();
 
         if(isset($filter['type'])) {
             $wallets = $wallets->filter(function ($wallet) use($filter) {
