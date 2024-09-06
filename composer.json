@@ -47,7 +47,8 @@
         "fakerphp/faker": "^1.23",
         "phpunit/phpunit": "^10.0",
         "mlabfactory/phpunit-self-api-integration": "v1.1-beta",
-        "budgetcontrol/seeds": "v0.1-beta"
+        "budgetcontrol/seeds": "v0.1-beta",
+        "budgetcontrol/schema-registry-service": "^1.0"
     },
     "autoload": {
         "psr-4": {
