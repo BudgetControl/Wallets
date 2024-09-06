@@ -7,6 +7,18 @@
         "source": {
             "type": "vcs",
             "url": "https://github.com/mlabfactory/phpunit-self-api-integration.git"
+        },
+        "budgetcontrol/seeds" : {
+            "type":"vcs",
+            "url":"git@github.com:BudgetControl/SeedsTestLibs.git"
+        },
+        "budgetcontrol/schema-registry-service" : {
+            "type":"vcs",
+            "url":"git@github.com:BudgetControl/Schema-Registry-Service.git"
+        },
+        "budgetcontrol/library" : {
+            "type":"vcs",
+            "url":"https://github.com/BudgetControl/Library.git"
         }
     },
     "require": {
@@ -27,13 +39,15 @@
         "symfony/property-access": "^7.0",
         "illuminate/filesystem": "^11.0",
         "nesbot/carbon": "^3.2",
-        "logtail/monolog-logtail": "^3.1"
+        "logtail/monolog-logtail": "^3.1",
+        "budgetcontrol/library": "^1.0"
     },
     "require-dev": {
         "nikic/php-parser": "^5.0",
         "fakerphp/faker": "^1.23",
         "phpunit/phpunit": "^10.0",
-        "mlabfactory/phpunit-self-api-integration": "dev-main"
+        "mlabfactory/phpunit-self-api-integration": "v1.1-beta",
+        "budgetcontrol/seeds": "v0.1-beta"
     },
     "autoload": {
         "psr-4": {

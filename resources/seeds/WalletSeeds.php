@@ -1,8 +1,6 @@
 <?php
 
-use Budgetcontrol\Entry\Domain\Enum\EntryType;
 use Budgetcontrol\Wallet\Domain\Model\Wallet;
-use Illuminate\Support\Carbon;
 use Phinx\Seed\AbstractSeed;
 
 class WalletSeeds extends AbstractSeed
