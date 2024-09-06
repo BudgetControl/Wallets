@@ -41,7 +41,7 @@
         "nesbot/carbon": "^3.2",
         "logtail/monolog-logtail": "^3.1",
         "budgetcontrol/library": "^1.0",
-        "budgetcontrol/schema-registry-service": "^1.0"
+        "budgetcontrol/schema-registry-service": "v1.0-beta"
     },
     "require-dev": {
         "nikic/php-parser": "^5.0",

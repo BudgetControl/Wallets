@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47313843e3b3bd60ba5d6264d8e05be4",
+    "content-hash": "99112e737d93843e0135da246f6aaf22",
     "packages": [
         {
             "name": "brick/math",
@@ -105,16 +105,16 @@
         },
         {
             "name": "budgetcontrol/schema-registry-service",
-            "version": "v1.0",
+            "version": "v1.0-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BudgetControl/Schema-Registry-Service.git",
-                "reference": "bd3d4a784cb018cb79ea1073be5c7f023b082b2d"
+                "reference": "01466280c3f20acec2167bee44562285e8e93751"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BudgetControl/Schema-Registry-Service/zipball/bd3d4a784cb018cb79ea1073be5c7f023b082b2d",
-                "reference": "bd3d4a784cb018cb79ea1073be5c7f023b082b2d",
+                "url": "https://api.github.com/repos/BudgetControl/Schema-Registry-Service/zipball/01466280c3f20acec2167bee44562285e8e93751",
+                "reference": "01466280c3f20acec2167bee44562285e8e93751",
                 "shasum": ""
             },
             "type": "library",
@@ -131,10 +131,10 @@
             ],
             "description": "An API Schema Registry is a centralized service that manages and distributes database schema definitions",
             "support": {
-                "source": "https://github.com/BudgetControl/Schema-Registry-Service/tree/v1.0",
+                "source": "https://github.com/BudgetControl/Schema-Registry-Service/tree/v1.0-beta",
                 "issues": "https://github.com/BudgetControl/Schema-Registry-Service/issues"
             },
-            "time": "2024-07-17T17:46:54+00:00"
+            "time": "2024-08-06T13:26:32+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -7108,6 +7108,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "budgetcontrol/schema-registry-service": 10,
         "mlabfactory/phpunit-self-api-integration": 10,
         "budgetcontrol/seeds": 10
     },
