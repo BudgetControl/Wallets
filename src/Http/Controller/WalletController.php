@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Budgetcontrol\Wallet\Http\Controller;
 
+use Ramsey\Uuid\Uuid;
 use Budgetcontrol\Wallet\Entity\Order;
 use Budgetcontrol\Wallet\Entity\Filter;
 use Budgetcontrol\Wallet\Domain\Model\Wallet;
@@ -73,6 +74,7 @@ class WalletController extends Controller {
         $this->validate($bodyParams);
 
         $wallet = new Wallet();
+        $bodyParams['uuid'] = Uuid::uuid4();
         $wallet->fill($bodyParams);
         $wallet->workspace_id = $workspaceId;
         $wallet->save();

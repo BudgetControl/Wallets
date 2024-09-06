@@ -59,7 +59,9 @@ class WalletCeateTest extends BaseCase
 
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
+        
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -90,7 +92,9 @@ class WalletCeateTest extends BaseCase
 
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
+
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -120,6 +124,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -149,6 +154,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -178,6 +184,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -207,6 +214,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -236,6 +244,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -265,6 +274,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
