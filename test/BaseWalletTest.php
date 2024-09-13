@@ -36,6 +36,27 @@ class BaseWalletTest extends BaseCase
        
     }
 
+    public function testOrdersAsc()
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $argv = ['wsid' => 1];
+
+        $queryParams = [
+            'order' => [
+                'name' => 'asc'
+            ]
+        ];
+
+        $request->method('getQueryParams')->willReturn($queryParams);
+
+        $controller = new WalletController();
+        $result = $controller->index($request, $response, $argv);
+
+        $this->assertEquals(200, $result->getStatusCode());
+       
+    }
+
     public function testCryptedData()
     {
         $request = $this->createMock(ServerRequestInterface::class);
