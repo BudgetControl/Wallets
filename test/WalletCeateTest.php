@@ -36,8 +36,8 @@ class WalletCeateTest extends BaseCase
         $bodyParams = [
             "name" => "test",
             "color" => "#e6e632ff",
-            "invoice_date" => "2024-07-11 13:45:00",
-            "closing_date" => "2024-07-04 13:45:00",
+            "invoice_date" => Carbon::parse(date("Y-m-d 00:00:00"))->toAtomString(),
+            "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card-revolving",
             "installement_value" => 400,
@@ -69,8 +69,8 @@ class WalletCeateTest extends BaseCase
         $bodyParams = [
             "name" => "test",
             "color" => "#e6e632ff",
-            "invoice_date" => "2024-07-11 13:45:00",
-            "closing_date" => "2024-07-04 13:45:00",
+            "invoice_date" => Carbon::parse(date("Y-m-d 00:00:00"))->toAtomString(),
+            "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card",
             "currency" => 2,
@@ -116,6 +116,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -145,6 +146,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -174,6 +176,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -203,6 +206,7 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -232,8 +236,10 @@ class WalletCeateTest extends BaseCase
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
         $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
     }
+
 }

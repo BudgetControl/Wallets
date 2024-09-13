@@ -1,7 +1,6 @@
 <?php
 
 use Budgetcontrol\Wallet\Domain\Model\Wallet;
-use Illuminate\Support\Carbon;
 use Phinx\Seed\AbstractSeed;
 use Budgetcontrol\Seeds\Resources\Seeds\WalletSeeds as Seeds;
 

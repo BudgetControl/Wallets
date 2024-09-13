@@ -12,14 +12,6 @@
             "type":"vcs",
             "url":"https://github.com/BudgetControl/Library.git"
         },
-        "budgetcontrol/seeds" : {
-            "type":"vcs",
-            "url":"git@github.com:BudgetControl/SeedsTestLibs.git"
-        },
-        "budgetcontrol/schema-registry-service" : {
-            "type":"vcs",
-            "url":"git@github.com:BudgetControl/Schema-Registry-Service.git"
-        },
         "budgetcontrol/cryptable" : {
             "type":"vcs",
             "url":"git@github.com:BudgetControl/LibsCryptable.git"

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Budgetcontrol\Wallet\Http\Controller;
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -27,6 +29,16 @@ class WalletController extends Controller {
             $wallets->withTrashed();
         }
 
+        if(!is_null(@$request->getQueryParams()['filters'])) {
+            $filters = new Filter($request->getQueryParams()['filters']);
+            $entries = $this->filters($entries, $filters);
+        }
+
+        if(!is_null(@$request->getQueryParams()['order'])) {
+            $order = new Order($request->getQueryParams()['order']);
+            $this->orderBy($wallets, $order);
+        }
+        
         $wallets = $wallets->get();
 
         if(isset($filter['type'])) {
@@ -101,7 +113,8 @@ class WalletController extends Controller {
             return response(['message' => 'Wallet not found'], 404);
         }
 
-        $wallet->update($bodyParams);
+        $wallet->fill($bodyParams);
+        $wallet->save();
         return response($wallet->toArray(), 200);
     }
 

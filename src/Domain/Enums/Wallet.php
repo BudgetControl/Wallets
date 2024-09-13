@@ -23,4 +23,15 @@ enum Wallet: string {
             self::CREDIT_CARD_REVOLVING->value
         ];
     }
+
+    public static function notCreditCardType(): array {
+        return [
+            self::BANK->value,
+            self::CACHE->value,
+            self::INVESTMENT->value,
+            self::LOAN->value,
+            self::OTHER->value,
+            self::PREPAID_CARD->value,
+        ];
+    }
 }
