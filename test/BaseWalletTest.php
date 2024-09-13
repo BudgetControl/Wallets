@@ -44,7 +44,7 @@ class BaseWalletTest extends BaseCase
 
         $bodyParams = [
             "name" => "test wallet crypt",
-            "color" => "#e6e632ff",
+            "color" => "#specificColor",
             "payment_account" => 1,
             "type" => "cache",
             "currency" => 2,
@@ -59,7 +59,7 @@ class BaseWalletTest extends BaseCase
 
         $this->assertEquals(201, $result->getStatusCode());
 
-        $lastEntry = DB::table('wallets')->latest()->first();
+        $lastEntry = DB::table('wallets')->where('color', '#specificColor')->first();
         $cryptedWalletName = Crypt::encrypt($bodyParams['name']);
         $this->assertEquals($cryptedWalletName, $lastEntry->name);
 
