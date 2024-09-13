@@ -1,10 +1,10 @@
 <?php
 namespace Budgetcontrol\Wallet\Http\Controller;
 
-use Budgetcontrol\Wallet\Domain\Enums\Wallet as EnumsWallet;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Budgetcontrol\Wallet\Domain\Model\Wallet;
+use Ramsey\Uuid\Uuid as UuidUuid;
 
 class WalletController extends Controller {
 
@@ -59,6 +59,7 @@ class WalletController extends Controller {
         $this->validate($bodyParams);
 
         $wallet = new Wallet();
+        $bodyParams['uuid'] = UuidUuid::uuid4()->toString();
         $wallet->fill($bodyParams);
         $wallet->workspace_id = $workspaceId;
         $wallet->save();

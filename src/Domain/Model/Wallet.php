@@ -1,43 +1,17 @@
 <?php
 namespace Budgetcontrol\Wallet\Domain\Model;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Budgetcontrol\Library\Model\Wallet as ModelWallet;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use BudgetcontrolLibs\Crypt\Traits\Crypt;
 
-class Wallet extends Model
+class Wallet extends ModelWallet
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, HasFactory, Crypt;
     
     protected $table = 'wallets';
-
-    protected $fillable = [
-    'uuid',
-    'name',
-    'color',
-    'type',
-    'installement',
-    'installement_value',
-    'currency',
-    'balance',
-    'exclude_from_stats',
-    'invoice_date',
-    'payment_account',
-    'closing_date',
-    'sorting',
-    'workspace_id',
-    'created_at',
-    'updated_at',
-    'deleted_at'
-    ];
-
-    public function __construct()
-    {
-        if(!isset($this->attributes['uuid'])) {
-            $this->attributes['uuid'] = \Ramsey\Uuid\Uuid::uuid4()->toString();
-        }
-        parent::__construct($this->attributes);
-    }
 
     public function setClosingDateAttribute($value)
     {
@@ -47,5 +21,15 @@ class Wallet extends Model
     public function setInvoiceDateAttribute($value)
     {
         return $value ? \Carbon\Carbon::parse($value)->format('d-m-Y 00:00:00') : null;
+    }
+
+    public function name(): Attribute
+    {
+        $this->key = env('APP_KEY');
+        
+        return Attribute::make(
+            get: fn (string $value) => $this->decrypt($value),
+            set: fn (string $value) => $this->encrypt($value),
+        );
     }
 }

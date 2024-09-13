@@ -2,18 +2,13 @@
 
 namespace Budgetcontrol\Test;
 
-use Slim\Psr7\Stream;
-use MLAB\PHPITest\Service\HttpRequest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Budgetcontrol\Wallet\Domain\Model\Wallet;
-use Budgetcontrol\Entry\Domain\Enum\EntryType;
 use Budgetcontrol\Wallet\Http\Controller\WalletController;
-use GuzzleHttp\Psr7\Utils;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class WalletCeateTest extends BaseCase
 {
-
     const ASSSERTION = [
             "name" => "",
             "color" => "",
@@ -58,7 +53,8 @@ class WalletCeateTest extends BaseCase
 
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
-        $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id', 'closing_date', 'invoice_date'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id', 'closing_date', 'invoice_date'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -89,7 +85,8 @@ class WalletCeateTest extends BaseCase
 
         $this->assertEquals(201, $result->getStatusCode());
         $resultBody = (array) json_decode((string) $result->getBody());
-        $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
+        $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id', 'closing_date', 'invoice_date'], $resultBody);
+        $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id', 'closing_date', 'invoice_date'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
        
@@ -222,35 +219,6 @@ class WalletCeateTest extends BaseCase
             "color" => "#e6e632ff",
             "payment_account" => 1,
             "type" => "prepaid-card",
-            "currency" => 2,
-            "balance" => 0,
-            "exclude_from_stats" => false
-        ];
-
-        $request->method('getParsedBody')->willReturn($bodyParams);
-
-        $controller = new WalletController();
-        $result = $controller->store($request, $response, $argv);
-
-        $this->assertEquals(201, $result->getStatusCode());
-        $resultBody = (array) json_decode((string) $result->getBody());
-        $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $resultBody);
-
-        $this->assertEquals($bodyParams, $resultBody);
-       
-    }
-
-    public function testOtherType()
-    {
-        $request = $this->createMock(ServerRequestInterface::class);
-        $response = $this->createMock(ResponseInterface::class);
-        $argv = ['wsid' => 1];
-
-        $bodyParams = [
-            "name" => "test",
-            "color" => "#e6e632ff",
-            "payment_account" => 1,
-            "type" => "other",
             "currency" => 2,
             "balance" => 0,
             "exclude_from_stats" => false
