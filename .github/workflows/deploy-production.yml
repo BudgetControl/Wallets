@@ -61,6 +61,7 @@ jobs:
         DB_DATABASE: test_db
         DB_USERNAME: root
         DB_PASSWORD: root
+        APP_KEY: testing
       run: vendor/bin/phpunit test
       
   deploy_job:
