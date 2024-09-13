@@ -71,11 +71,11 @@ class WalletCrudTest extends BaseCase
         $bodyParams = [
             "name" => "test",
             "color" => "#e6e632ff",
-            "invoice_date" => Carbon::parse(date("Y-m-d 00:00:00"))->toAtomString(),
-            "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
+            "invoice_date" => Carbon::parse("2024-09-01 00:00:00")->toAtomString(),
+            "closing_date" => Carbon::parse(date("2024-10-01 00:00:00"))->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card-revolving",
-            "installement_value" => "400.00",
+            "installement_value" => 400.00,
             "currency" => 2,
             "balance" => 0,
             "currency" => "2",
@@ -84,7 +84,7 @@ class WalletCrudTest extends BaseCase
             "installement" => 1,
             "sorting" => 1,
             "deleted_at" => null,
-            "credit_limit" => 1000
+            "credit_limit" => 1000.00
         ];
 
         $request = $this->createMock(ServerRequestInterface::class);

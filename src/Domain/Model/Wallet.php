@@ -13,16 +13,6 @@ class Wallet extends ModelWallet
     
     protected $table = 'wallets';
 
-    public function setClosingDateAttribute($value)
-    {
-        return $value ? \Carbon\Carbon::parse($value)->format('d-m-Y 00:00:00') : null;
-    }
-
-    public function setInvoiceDateAttribute($value)
-    {
-        return $value ? \Carbon\Carbon::parse($value)->format('d-m-Y 00:00:00') : null;
-    }
-
     public function name(): Attribute
     {
         $this->key = env('APP_KEY');
