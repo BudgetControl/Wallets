@@ -8,17 +8,13 @@
             "type": "vcs",
             "url": "https://github.com/mlabfactory/phpunit-self-api-integration.git"
         },
-        "budgetcontrol/seeds" : {
-            "type":"vcs",
-            "url":"git@github.com:BudgetControl/SeedsTestLibs.git"
-        },
-        "budgetcontrol/schema-registry-service" : {
-            "type":"vcs",
-            "url":"git@github.com:BudgetControl/Schema-Registry-Service.git"
-        },
         "budgetcontrol/library" : {
             "type":"vcs",
             "url":"https://github.com/BudgetControl/Library.git"
+        },
+        "budgetcontrol/cryptable" : {
+            "type":"vcs",
+            "url":"git@github.com:BudgetControl/LibsCryptable.git"
         }
     },
     "require": {
@@ -40,15 +36,16 @@
         "illuminate/filesystem": "^11.0",
         "nesbot/carbon": "^3.2",
         "logtail/monolog-logtail": "^3.1",
-        "budgetcontrol/library": "^1.0",
-        "budgetcontrol/schema-registry-service": "v1.0-beta"
+        "budgetcontrol/library": "^v1.0",
+        "budgetcontrol/schema-registry-service": "v1.0-beta",
+        "budgetcontrol/cryptable": "^v0.1"
     },
     "require-dev": {
         "nikic/php-parser": "^5.0",
         "fakerphp/faker": "^1.23",
         "phpunit/phpunit": "^10.0",
-        "mlabfactory/phpunit-self-api-integration": "v1.1-beta",
-        "budgetcontrol/seeds": "v0.1-beta"
+        "mlabfactory/phpunit-self-api-integration": "^v1.1-beta",
+        "budgetcontrol/seeds": "^v0.1"
     },
     "autoload": {
         "psr-4": {
