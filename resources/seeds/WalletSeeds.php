@@ -1,9 +1,8 @@
 <?php
 
-use Budgetcontrol\Entry\Domain\Enum\EntryType;
 use Budgetcontrol\Wallet\Domain\Model\Wallet;
-use Illuminate\Support\Carbon;
 use Phinx\Seed\AbstractSeed;
+use Budgetcontrol\Seeds\Resources\Seeds\WalletSeeds as Seeds;
 
 class WalletSeeds extends AbstractSeed
 {
@@ -126,7 +125,7 @@ class WalletSeeds extends AbstractSeed
         ];
 
         foreach ($wallets as $wallet) {
-            Wallet::create($wallet);
+            Seeds::create(Wallet::class, $wallet);
         }
     }
 }

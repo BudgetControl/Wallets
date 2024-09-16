@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace Budgetcontrol\Wallet\Http\Controller;
 
-use Budgetcontrol\Wallet\Domain\Enums\Wallet as EnumsWallet;
+use Ramsey\Uuid\Uuid as UuidUuid;
+use Budgetcontrol\Wallet\Entity\Order;
+use Budgetcontrol\Wallet\Entity\Filter;
+use Budgetcontrol\Wallet\Domain\Model\Wallet;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Budgetcontrol\Wallet\Domain\Model\Wallet;
 
 class WalletController extends Controller {
 
@@ -27,6 +31,16 @@ class WalletController extends Controller {
             $wallets->withTrashed();
         }
 
+        if(!is_null(@$request->getQueryParams()['filters'])) {
+            $filters = new Filter($request->getQueryParams()['filters']);
+            $entries = $this->filters($entries, $filters);
+        }
+
+        if(!is_null(@$request->getQueryParams()['order'])) {
+            $order = new Order($request->getQueryParams()['order']);
+            $this->orderBy($wallets, $order);
+        }
+        
         $wallets = $wallets->get();
 
         if(isset($filter['type'])) {
@@ -59,6 +73,7 @@ class WalletController extends Controller {
         $this->validate($bodyParams);
 
         $wallet = new Wallet();
+        $bodyParams['uuid'] = UuidUuid::uuid4()->toString();
         $wallet->fill($bodyParams);
         $wallet->workspace_id = $workspaceId;
         $wallet->save();
