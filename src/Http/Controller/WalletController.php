@@ -6,9 +6,10 @@ namespace Budgetcontrol\Wallet\Http\Controller;
 use Ramsey\Uuid\Uuid as UuidUuid;
 use Budgetcontrol\Wallet\Entity\Order;
 use Budgetcontrol\Wallet\Entity\Filter;
-use Budgetcontrol\Wallet\Domain\Model\Wallet;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Budgetcontrol\Library\Model\Wallet;
+
 
 class WalletController extends Controller {
 
@@ -73,9 +74,22 @@ class WalletController extends Controller {
         $this->validate($bodyParams);
 
         $wallet = new Wallet();
-        $bodyParams['uuid'] = UuidUuid::uuid4()->toString();
-        $wallet->fill($bodyParams);
+        $wallet->uuid = UuidUuid::uuid4()->toString();
+        $wallet->name = $bodyParams['name'];
+        $wallet->color = $bodyParams['color'];
+        $wallet->type = $bodyParams['type'];
+        $wallet->currency = $bodyParams['currency'];
+        $wallet->exclude_from_stats = $bodyParams['exclude_from_stats'];
+        $wallet->installement_value = $bodyParams['installement_value'];
+        $wallet->payment_account = $bodyParams['payment_account'];
+        $wallet->closing_date = $bodyParams['closing_date'];
+        $wallet->invoice_date = $bodyParams['invoice_date'];
+        $wallet->installement = $bodyParams['installement'];
+        $wallet->sorting = $bodyParams['sorting'];
+        $wallet->credit_limit = $bodyParams['credit_limit'];
+        $wallet->voucher_value = $bodyParams['voucher_value'];
         $wallet->workspace_id = $workspaceId;
+        $wallet->balance = $bodyParams['balance'];
         $wallet->save();
 
         return response($wallet->toArray(), 201);
@@ -181,4 +195,5 @@ class WalletController extends Controller {
 
         return response($wallet->toArray(), 200);
     }
+
 }

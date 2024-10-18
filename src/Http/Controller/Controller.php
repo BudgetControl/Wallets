@@ -5,7 +5,7 @@ namespace Budgetcontrol\Wallet\Http\Controller;
 
 use Budgetcontrol\Wallet\Entity\Order;
 use Budgetcontrol\Wallet\Entity\Filter;
-use Budgetcontrol\Wallet\Domain\Enums\Wallet;
+use Budgetcontrol\Library\Entity\Wallet;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Budgetcontrol\Wallet\Exceptions\NotValidWalletException;
@@ -28,7 +28,7 @@ class Controller {
         }
 
         // if credit card type, must have installement and installement_value
-        if($data['type'] === Wallet::CREDIT_CARD || $data['type'] === Wallet::CREDIT_CARD_REVOLVING) {
+        if($data['type'] === Wallet::creditCard->value || $data['type'] === Wallet::creditCardRevolving->value) {
             if(!isset($data['installement'])) {
                 throw new NotValidWalletException('Credit card must have installement and installement_value');
             }
@@ -47,9 +47,16 @@ class Controller {
         }
 
         // if credit card revolving, installement_value
-        if($data['type'] === Wallet::CREDIT_CARD_REVOLVING) {
+        if($data['type'] === Wallet::creditCardRevolving->value) {
             if(!isset($data['installement_value'])) {
                 throw new NotValidWalletException('Credit card revolving must have installement_value');
+            }
+        }
+
+        // if wallet is voucher validate fields
+        if($data['type'] === Wallet::voucher->value) {
+            if(empty($data['voucher_value'])) {
+                throw new NotValidWalletException('Voucher must have voucher_value');
             }
         }
     }

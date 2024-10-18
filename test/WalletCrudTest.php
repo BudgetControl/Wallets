@@ -84,7 +84,9 @@ class WalletCrudTest extends BaseCase
             "installement" => 1,
             "sorting" => 1,
             "deleted_at" => null,
-            "credit_limit" => 1000.00
+            "credit_limit" => 1000.00,
+            'voucher_value' => null,
+            'metafield' => null
         ];
 
         $request = $this->createMock(ServerRequestInterface::class);
