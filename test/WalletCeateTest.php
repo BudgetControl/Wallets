@@ -42,9 +42,14 @@ class WalletCeateTest extends BaseCase
             "payment_account" => 1,
             "type" => "credit-card-revolving",
             "installement_value" => 400,
+            "installement" => 1,
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => false
+            "exclude_from_stats" => false,
+            'installement_value' => 400.00,
+            'sorting' => null,
+            'credit_limit' => null,
+            'voucher_value' => null
         ];
 
         $request->method('getParsedBody')->willReturn($bodyParams);
@@ -74,9 +79,14 @@ class WalletCeateTest extends BaseCase
             "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card",
+            "installement" => 1,
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => false
+            "exclude_from_stats" => false,
+            'installement_value' => null,
+            'sorting' => null,
+            'credit_limit' => null,
+            'voucher_value' => null,
         ];
 
         $request->method('getParsedBody')->willReturn($bodyParams);
@@ -106,7 +116,15 @@ class WalletCeateTest extends BaseCase
             "type" => "bank",
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => false
+            "exclude_from_stats" => false,
+            'installement_value' => null,
+            'closing_date' => null,
+            'invoice_date' => null,
+            'installement' => null,
+            'sorting' => null,
+            'credit_limit' => null,
+            'voucher_value' => null,
+            'installement_value' => null
         ];
 
         $request->method('getParsedBody')->willReturn($bodyParams);
@@ -136,7 +154,14 @@ class WalletCeateTest extends BaseCase
             "type" => "cache",
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => false
+            "exclude_from_stats" => false,
+            'closing_date' => null,
+            'invoice_date' => null,
+            'installement' => null,
+            'sorting' => null,
+            'credit_limit' => null,
+            'voucher_value' => null,
+            'installement_value' => null
         ];
 
         $request->method('getParsedBody')->willReturn($bodyParams);
@@ -166,7 +191,14 @@ class WalletCeateTest extends BaseCase
             "type" => "loan",
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => false
+            "exclude_from_stats" => false,
+            'closing_date' => null,
+            'invoice_date' => null,
+            'installement' => null,
+            'sorting' => null,
+            'credit_limit' => null,
+            'voucher_value' => null,
+            'installement_value' => null
         ];
 
         $request->method('getParsedBody')->willReturn($bodyParams);
@@ -196,7 +228,14 @@ class WalletCeateTest extends BaseCase
             "type" => "investment",
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => true
+            "exclude_from_stats" => true,
+            'closing_date' => null,
+            'invoice_date' => null,
+            'installement' => null,
+            'sorting' => null,
+            'credit_limit' => null,
+            'voucher_value' => null,
+            'installement_value' => null
         ];
 
         $request->method('getParsedBody')->willReturn($bodyParams);
@@ -226,7 +265,14 @@ class WalletCeateTest extends BaseCase
             "type" => "prepaid-card",
             "currency" => 2,
             "balance" => 0,
-            "exclude_from_stats" => false
+            "exclude_from_stats" => false,
+            'closing_date' => null,
+            'invoice_date' => null,
+            'installement' => null,
+            'sorting' => null,
+            'credit_limit' => null,
+            'voucher_value' => null,
+            'installement_value' => null
         ];
 
         $request->method('getParsedBody')->willReturn($bodyParams);
@@ -240,6 +286,66 @@ class WalletCeateTest extends BaseCase
         $bodyParams = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id'], $bodyParams);
 
         $this->assertEquals($bodyParams, $resultBody);
+       
+    }
+
+    public function testCreateVoucherType()
+    {
+        $_balance= new \stdClass();
+        $_balance->value_in_valut = 50;
+        $_balance->value_in_voucher = 10;
+
+        $_assertions = [
+            "name" => "wallet",
+            "color" => "#e6e632ff",
+            "type" => "voucher",
+            "installement" => null,
+            "installement_value" => null,
+            "credit_limit" => null,
+            "currency" => 2,
+            "balance" => $_balance,
+            "exclude_from_stats" => false,
+            "invoice_date" => null,
+            "payment_account" => null,
+            "closing_date" => null,
+            "sorting" => null,
+            "workspace_id" => 1,
+            "created_at" => "2024-10-18T12:39:03.000000Z",
+            "updated_at" => "2024-10-18T12:41:32.000000Z",
+            "voucher_value" => 5
+        ];
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $argv = ['wsid' => 1];
+
+        $bodyParams = [
+            "name" => "wallet",
+            "color" => "#e6e632ff",
+            "type" => "voucher",
+            "installement" => null,
+            "installement_value" => null,
+            "credit_limit" => null,
+            "invoice_date" => null,
+            "payment_account" => null,
+            "closing_date" => null,
+            "currency" => 2,
+            "balance" => 10,
+            "exclude_from_stats" => false,
+            "voucher_value" => 5
+        ];
+
+        $request->method('getParsedBody')->willReturn($bodyParams);
+
+        $controller = new WalletController();
+        $result = $controller->store($request, $response, $argv);
+
+        $this->assertEquals(201, $result->getStatusCode());
+        $resultBody = (array) json_decode((string) $result->getBody());
+        $resultBody = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id', 'closing_date', 'invoice_date'], $resultBody);
+        $_assertions = $this->removeKeysFromAssertions(['id', 'created_at', 'updated_at', 'uuid', 'workspace_id', 'closing_date', 'invoice_date'], $_assertions);
+
+        $this->assertEquals($_assertions, $resultBody);
        
     }
 
