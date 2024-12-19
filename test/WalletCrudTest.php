@@ -80,14 +80,15 @@ class WalletCrudTest extends BaseCase
             "currency" => 2,
             "balance" => 0,
             "currency" => "2",
-            "balance" => '0.00',
-            "exclude_from_stats" => 0,
-            "installement" => 1,
+            "balance" => 0.0,
+            "exclude_from_stats" => false,
+            "installement" => true,
             "sorting" => 1,
             "deleted_at" => null,
             "credit_limit" => 1000.00,
             'voucher_value' => null,
-            'metafield' => null
+            'metafield' => null,
+            'archived' => false
         ];
 
         $request = $this->createMock(ServerRequestInterface::class);
@@ -121,7 +122,7 @@ class WalletCrudTest extends BaseCase
 
         $walletPatched = Wallet::where('workspace_id', $argv['wsid'])->where('uuid', $argv['uuid'])->first();
 
-        $this->assertEquals(200, $result->getStatusCode());
+        $this->assertEquals(204, $result->getStatusCode());
         $this->assertTrue($walletPatched->archived === true);
     }
 
