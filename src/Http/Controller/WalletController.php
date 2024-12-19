@@ -106,7 +106,7 @@ class WalletController extends Controller {
     public function show(Request $request, Response $response, $argv): Response
     {
         $id = $argv['uuid'];
-        $wallet = Wallet::where('uuid', $id)->withTrashed()->first();
+        $wallet = Wallet::where('uuid', $id)->first();
         return response($wallet->toArray(), 200);
     }
 
