@@ -12,6 +12,7 @@ final class Filter {
         'type',
         'installement',
         'currency',
+        'archived',
     ];
 
     public function __construct(array $filters) {
