@@ -29,7 +29,8 @@ class WalletCrudTest extends BaseCase
         'workspace_id' => null,
         'updated_at' => '',
         'created_at' => '',
-        'id' => null
+        'id' => null,
+        "archived" => false
     ];
 
     public function testIndex()
@@ -106,6 +107,39 @@ class WalletCrudTest extends BaseCase
 
         $this->assertEquals($bodyParams, $resultBody);
     }
+    
+
+    public function testArchive()
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+
+        $argv = ['wsid' => 1, 'uuid' => '50bb8d7f-8f64-4597-b74d-d07d6b7a646c'];
+
+        $controller = new WalletController();
+        $result = $controller->archive($request, $response, $argv);
+
+        $walletPatched = Wallet::where('workspace_id', $argv['wsid'])->where('uuid', $argv['uuid'])->first();
+
+        $this->assertEquals(200, $result->getStatusCode());
+        $this->assertTrue($walletPatched->archived === true);
+    }
+
+    public function testRestore()
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+
+        $argv = ['wsid' => 1, 'uuid' => '50bb8d7f-8f64-4597-b74d-d07d6b7a646c'];
+
+        $controller = new WalletController();
+        $result = $controller->restore($request, $response, $argv);
+
+        $walletPatched = Wallet::where('workspace_id', $argv['wsid'])->where('uuid', $argv['uuid'])->first();
+
+        $this->assertEquals(200, $result->getStatusCode());
+        $this->assertTrue($walletPatched->archived === false);
+    }
 
     public function testDestroy()
     {
@@ -119,20 +153,6 @@ class WalletCrudTest extends BaseCase
 
         $this->assertEquals(204, $result->getStatusCode());
         $this->assertNull(Wallet::where('workspace_id', $argv['wsid'])->where('uuid', $argv['uuid'])->first());
-    }
-
-    public function testRestore()
-    {
-        $request = $this->createMock(ServerRequestInterface::class);
-        $response = $this->createMock(ResponseInterface::class);
-
-        $argv = ['wsid' => 1, 'uuid' => '50bb8d7f-8f64-4597-b74d-d07d6b7a646c'];
-
-        $controller = new WalletController();
-        $result = $controller->restore($request, $response, $argv);
-
-        $this->assertEquals(200, $result->getStatusCode());
-        $this->assertNotNull(Wallet::where('workspace_id', $argv['wsid'])->where('uuid', $argv['uuid'])->first());
     }
 
     public function assertSorting()

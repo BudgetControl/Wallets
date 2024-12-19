@@ -25,7 +25,8 @@ class WalletCeateTest extends BaseCase
             'workspace_id' => null,
             'updated_at' => '',
             'created_at' => '',
-            'id' => null
+            'id' => null,
+            "archived" => false
     ];
 
     public function testCreateCreditCardRevolginType()
@@ -312,7 +313,8 @@ class WalletCeateTest extends BaseCase
             "workspace_id" => 1,
             "created_at" => "2024-10-18T12:39:03.000000Z",
             "updated_at" => "2024-10-18T12:41:32.000000Z",
-            "voucher_value" => 5
+            "voucher_value" => 5,
+            "archived" => false,
         ];
 
         $request = $this->createMock(ServerRequestInterface::class);
