@@ -155,6 +155,28 @@ class WalletController extends Controller {
     }
 
     /**
+     * Destroy a wallet.
+     *
+     * @param Request $request The HTTP request object.
+     * @param Response $response The HTTP response object.
+     * @param mixed $argv Additional arguments passed to the controller.
+     * @return Response
+     */
+    public function archive(Request $request, Response $response, $argv): Response
+    {
+        $id = $argv['uuid'];
+        $wallet = Wallet::where('uuid', $id)->first();
+        if(!$wallet) {
+            return response(['message' => 'Wallet not found'], 404);
+        }
+
+        $wallet->archived = true;
+        $wallet->save();
+
+        return response(['message' => 'Wallet archived'], 204);
+    }
+
+    /**
      * Restores a wallet.
      *
      * @param Request $request The HTTP request object.
@@ -165,11 +187,13 @@ class WalletController extends Controller {
     public function restore(Request $request, Response $response, $argv): Response
     {
         $id = $argv['uuid'];
-        $wallet = Wallet::withTrashed()->where('uuid', $id)->withTrashed()->first();
+        $wallet = Wallet::where('uuid', $id)->first();
         if(!$wallet) {
             return response(['message' => 'Wallet not found'], 404);
         }
-        $wallet->restore();
+
+        $wallet->archived = false;
+        $wallet->save();
 
         return response($wallet->toArray(), 200);
     }
