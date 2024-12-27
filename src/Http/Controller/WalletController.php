@@ -23,7 +23,7 @@ class WalletController extends Controller {
      */
     public function index(Request $request, Response $response, $argv): Response
     {
-        $wallets = Wallet::where('workspace_id', $argv['wsid'])->where('archived', false);
+        $wallets = Wallet::where('workspace_id', $argv['wsid']);
 
         // get filter by query params
         $filter = $request->getQueryParams()['filter'] ?? null;
