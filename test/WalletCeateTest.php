@@ -25,7 +25,8 @@ class WalletCeateTest extends BaseCase
             'workspace_id' => null,
             'updated_at' => '',
             'created_at' => '',
-            'id' => null
+            'id' => null,
+            "archived" => false
     ];
 
     public function testCreateCreditCardRevolginType()
