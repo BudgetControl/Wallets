@@ -34,7 +34,7 @@ class WalletController extends Controller {
 
         if(!is_null(@$request->getQueryParams()['filters'])) {
             $filters = new Filter($request->getQueryParams()['filters']);
-            $entries = $this->filters($entries, $filters);
+            $entries = $this->filters($wallets, $filters);
         }
 
         if(!is_null(@$request->getQueryParams()['order'])) {
