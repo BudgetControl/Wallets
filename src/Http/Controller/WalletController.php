@@ -89,7 +89,7 @@ class WalletController extends Controller {
         $wallet->credit_limit = $bodyParams['credit_limit'];
         $wallet->voucher_value = $bodyParams['voucher_value'];
         $wallet->workspace_id = $workspaceId;
-        $wallet->balance = $bodyParams['balance'];
+        $wallet->balance = $bodyParams['balance'] ?? 0;
         $wallet->save();
 
         return response($wallet->toArray(), 201);
