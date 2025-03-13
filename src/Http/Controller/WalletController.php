@@ -9,7 +9,7 @@ use Budgetcontrol\Wallet\Entity\Filter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Budgetcontrol\Library\Model\Wallet;
-
+use Webit\Wrapper\BcMath\BcMathNumber;
 
 class WalletController extends Controller {
 
@@ -215,6 +215,35 @@ class WalletController extends Controller {
         }
 
         $wallet->sorting = $request->getParsedBody()['sorting'];
+        $wallet->save();
+
+        return response($wallet->toArray(), 200);
+    }
+
+    /**
+     * Retrieves the balance of a wallet.
+     *
+     * This method processes a request to get the balance information of a specific wallet.
+     *
+     * @param Request $request The HTTP request object
+     * @param Response $response The HTTP response object
+     * @param array $argv Additional arguments passed from the route
+     * @return Response The HTTP response containing the wallet balance
+     */
+    public function balance(Request $request, Response $response, $argv): Response
+    {
+        $id = $argv['uuid'];
+        $wallet = Wallet::where('uuid', $id)->first();
+        if(!$wallet) {
+            return response(['message' => 'Wallet not found'], 404);
+        }
+
+        $wallet->balance = $request->getParsedBody()['amount'];
+
+        $actualBalance = new BcMathNumber($wallet->balance);
+        $actualBalance->add($request->getParsedBody()['amount']);
+
+        $wallet->balance = $actualBalance->toFloat();
         $wallet->save();
 
         return response($wallet->toArray(), 200);
