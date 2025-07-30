@@ -16,4 +16,7 @@ $app->patch('/{wsid}/restore/{uuid}', [WalletController::class, 'restore']);
 $app->patch('/{wsid}/archive/{uuid}', [WalletController::class, 'archive']);
 $app->patch('/{wsid}/sorting/{uuid}', [WalletController::class, 'sorting']);
 
+//update balance
+$app->patch('/{wsid}/balance/{uuid}', [WalletController::class, 'balance']);
+
 $app->get('/monitor', [WalletController::class, 'monitor']);

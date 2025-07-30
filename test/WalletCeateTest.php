@@ -80,7 +80,7 @@ class WalletCeateTest extends BaseCase
             "closing_date" => Carbon::parse(date("Y-m-d 00:00:00"))->addMonth()->toAtomString(),
             "payment_account" => 1,
             "type" => "credit-card",
-            "installement" => 1,
+            "installement" => false,
             "currency" => 2,
             "balance" => 0,
             "exclude_from_stats" => false,
