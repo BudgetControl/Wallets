@@ -33,9 +33,6 @@ class Controller {
 
         // if credit card type, must have installement and installement_value
         if($data['type'] === Wallet::creditCard->value || $data['type'] === Wallet::creditCardRevolving->value) {
-            if(!isset($data['installement'])) {
-                throw new NotValidWalletException('Credit card must have installement and installement_value');
-            }
 
             if(!isset($data['payment_account'])) {
                 throw new NotValidWalletException('Credit card must have payment_account');
