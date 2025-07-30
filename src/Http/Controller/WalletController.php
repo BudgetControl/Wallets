@@ -84,7 +84,7 @@ class WalletController extends Controller {
         $wallet->payment_account = $bodyParams['payment_account'];
         $wallet->closing_date = $bodyParams['closing_date'];
         $wallet->invoice_date = $bodyParams['invoice_date'];
-        $wallet->installement = $bodyParams['installement'];
+        $wallet->installement = $this->isInstillamentWallet($bodyParams['type']);
         $wallet->sorting = $bodyParams['sorting'];
         $wallet->credit_limit = $bodyParams['credit_limit'];
         $wallet->voucher_value = $bodyParams['voucher_value'];
@@ -128,6 +128,8 @@ class WalletController extends Controller {
         if(!$wallet) {
             return response(['message' => 'Wallet not found'], 404);
         }
+
+        $bodyParams['installement'] = $this->isInstillamentWallet($bodyParams['type']);
 
         $wallet->fill($bodyParams);
         $wallet->save();

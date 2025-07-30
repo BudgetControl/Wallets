@@ -1,4 +1,4 @@
-service: budgetcontrol-ms-stats
+service: budgetcontrol-ms-wallet
 provider:
   name: aws
   region: eu-west-1

@@ -12,6 +12,10 @@ use Budgetcontrol\Wallet\Exceptions\NotValidWalletException;
 
 class Controller {
 
+    const INSTILLAMENT_WALLETS = [
+        Wallet::creditCardRevolving->value,
+    ];  
+
     public function monitor(Request $request, Response $response)
     {
         return response([
@@ -99,5 +103,20 @@ class Controller {
         }
 
         return $query;
+    }
+
+    /**
+     * Determines if the given wallet is an installment wallet.
+     *
+     * @param string $wallet The wallet instance to check.
+     * @return bool True if the wallet is an installment wallet, false otherwise.
+     */
+    protected function isInstillamentWallet(string $wallet): bool
+    {
+        if(in_array($wallet, self::INSTILLAMENT_WALLETS)) {
+            return true;
+        }
+
+        return false;
     }
 }
