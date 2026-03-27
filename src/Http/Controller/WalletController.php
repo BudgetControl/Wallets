@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Budgetcontrol\Wallet\Http\Controller;
 
+use Budgetcontrol\Library\Model\AggregatedBalance;
+use Budgetcontrol\Library\Model\Entry;
 use Ramsey\Uuid\Uuid as UuidUuid;
 use Budgetcontrol\Wallet\Entity\Order;
 use Budgetcontrol\Wallet\Entity\Filter;
@@ -89,7 +91,6 @@ class WalletController extends Controller {
         $wallet->credit_limit = $bodyParams['credit_limit'];
         $wallet->voucher_value = $bodyParams['voucher_value'];
         $wallet->workspace_id = $workspaceId;
-        $wallet->balance = $bodyParams['balance'] ?? 0;
         $wallet->save();
 
         return response($wallet->toArray(), 201);
@@ -223,7 +224,7 @@ class WalletController extends Controller {
     }
 
     /**
-     * Retrieves the balance of a wallet.
+     * Retrieves and update the balance of a wallet.
      *
      * This method processes a request to get the balance information of a specific wallet.
      *
@@ -231,22 +232,38 @@ class WalletController extends Controller {
      * @param Response $response The HTTP response object
      * @param array $argv Additional arguments passed from the route
      * @return Response The HTTP response containing the wallet balance
+     * TODO: create a test for this method
      */
     public function balance(Request $request, Response $response, $argv): Response
     {
         $id = $argv['uuid'];
-        $wallet = Wallet::where('uuid', $id)->first();
+        $wallet = AggregatedBalance::where('uuid', $id)->first();
         if(!$wallet) {
             return response(['message' => 'Wallet not found'], 404);
         }
 
-        $wallet->balance = $request->getParsedBody()['amount'];
+        $amountToInsert = $request->getParsedBody()['amount'];
 
         $actualBalance = new BcMathNumber($wallet->balance);
-        $actualBalance->add($request->getParsedBody()['amount']);
+        $balanceToBe = new BcMathNumber($amountToInsert);
 
-        $wallet->balance = $actualBalance->toFloat();
-        $wallet->save();
+        $difference = $actualBalance->sub($balanceToBe);
+        $amountToSave = $difference * -1; // if the difference is negative, it means that the balance to be is less than the actual balance
+
+        Entry::create([
+            'account_id' => $wallet->id,
+            'amount' => $amountToSave,
+            'description' => 'Balance update',
+            'date' => date('Y-m-d'),
+            'note' => 'Balance update',
+            'category_id' => null,
+            'currency_id' => $wallet->currency,
+            'payment_type' => 1, //default payment type, not used in this context
+            'workspace_id' => $wallet->workspace_id,
+            'type' => $amountToSave > 0 ? \Budgetcontrol\Library\Entity\Entry::incoming->value : \Budgetcontrol\Library\Entity\Entry::expenses->value,
+        ]);
+        
+        $wallet = AggregatedBalance::where('uuid', $id)->first(); // get the wallet again to return the updated balance
 
         return response($wallet->toArray(), 200);
     }

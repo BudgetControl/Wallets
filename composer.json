@@ -23,6 +23,10 @@
         "budgetcontrol:seeds": {
             "type": "vcs",
             "url": "https://github.com/BudgetControl/SeedsTestLibs.git"
+        },
+        "budgetcontrol/application-tests": {
+            "type": "vcs",
+            "url": "https://github.com/BudgetControl/ApplicationTests.git"
         }
     },
     "require": {
@@ -44,17 +48,14 @@
         "illuminate/filesystem": "^11.0",
         "nesbot/carbon": "^3.2",
         "logtail/monolog-logtail": "^3.1",
-        "budgetcontrol/library": "^1.3",
-        "budgetcontrol/cryptable": "^v0.1",
+        "budgetcontrol/library": "^v1.5.1",
         "bref/bref": "~2.4.1"
     },
     "require-dev": {
         "nikic/php-parser": "^5.0",
         "fakerphp/faker": "^1.23",
         "phpunit/phpunit": "^10.0",
-        "mlabfactory/phpunit-self-api-integration": "^v1.1-beta",
-        "budgetcontrol/seeds": "^v0.2",
-        "budgetcontrol/schema-registry-service": "^v1.1"
+        "budgetcontrol/application-tests": "^1.0@RC"
     },
     "autoload": {
         "psr-4": {
@@ -71,5 +72,5 @@
             "email": "marco.defelice@mlabfactory.it"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "beta"
 }

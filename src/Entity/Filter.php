@@ -8,7 +8,6 @@ final class Filter {
     protected array $filters = [];
 
     private const FILTERS = [
-        'balance',
         'type',
         'installement',
         'currency',
