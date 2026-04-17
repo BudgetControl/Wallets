@@ -108,6 +108,11 @@ class WalletController extends Controller {
     {
         $id = $argv['uuid'];
         $wallet = Wallet::where('uuid', $id)->first();
+
+        if(!$wallet) {
+            return response(['message' => 'Wallet not found'], 404);
+        }
+
         return response($wallet->toArray(), 200);
     }
 
@@ -248,15 +253,16 @@ class WalletController extends Controller {
         $balanceToBe = new BcMathNumber($amountToInsert);
 
         $difference = $actualBalance->sub($balanceToBe);
-        $amountToSave = $difference * -1; // if the difference is negative, it means that the balance to be is less than the actual balance
+        $amountToSave = $difference->getValue() * -1; // if the difference is negative, it means that the balance to be is less than the actual balance
 
         Entry::create([
             'account_id' => $wallet->id,
             'amount' => $amountToSave,
             'description' => 'Balance update',
+            'confirmed' => true,
             'date' => date('Y-m-d'),
             'note' => 'Balance update',
-            'category_id' => null,
+            'category_id' => 75,
             'currency_id' => $wallet->currency,
             'payment_type' => 1, //default payment type, not used in this context
             'workspace_id' => $wallet->workspace_id,
@@ -264,7 +270,6 @@ class WalletController extends Controller {
         ]);
         
         $wallet = AggregatedBalance::where('uuid', $id)->first(); // get the wallet again to return the updated balance
-
         return response($wallet->toArray(), 200);
     }
 

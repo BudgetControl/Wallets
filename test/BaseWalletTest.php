@@ -69,7 +69,6 @@ class BaseWalletTest extends BaseCase
             "payment_account" => 1,
             "type" => "cache",
             "currency" => 2,
-            "balance" => 0,
             "exclude_from_stats" => false
         ];
 
@@ -84,5 +83,24 @@ class BaseWalletTest extends BaseCase
         $cryptedWalletName = Crypt::encrypt($bodyParams['name']);
         $this->assertEquals($cryptedWalletName, $lastEntry->name);
 
+    }
+
+    public function testWalletBalanceUpdate()
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $response = $this->createMock(ResponseInterface::class);
+        $argv = ['uuid' => "testing-uuid-1"];
+        $bodyParams = [
+            "amount" => 100
+        ];
+
+        $request->method('getParsedBody')->willReturn($bodyParams);
+
+        $controller = new WalletController();
+        $result = $controller->balance($request, $response, $argv);
+
+        $this->assertEquals(200, $result->getStatusCode());
+        $resultBody = (array) json_decode((string) $result->getBody());
+        $this->assertEquals(100, $resultBody['balance']);
     }
 }
